@@ -1,0 +1,546 @@
+<!--
+  FROSTY FLEET #16 — NOTICE OF RACE (WordPress Custom HTML block)
+  ------------------------------------------------------------------
+  HOW TO PUBLISH THIS:
+  1. In WordPress, add a "Custom HTML" block to your post/page.
+  2. Paste this entire file's contents into that block.
+  3. Upload logo.png to your Media Library (Add Media), open it,
+     and copy its "File URL".
+  4. Replace REPLACE-WITH-LOGO-MEDIA-URL below (in the <img src="...">
+     tag) with that URL.
+  5. Preview the post before publishing to confirm the logo shows up
+     and the layout looks right in your theme.
+
+  NOTE ON "ADD TO CALENDAR" LINKS: each race/tentative date has a small
+  calendar icon that downloads a one-event .ics file (works with
+  Apple Calendar, Google Calendar, Outlook, etc. on phone or desktop).
+  These are plain data-URI download links, so they need no server
+  setup — but a handful of restrictive WordPress security plugins
+  strip data: URIs from post content. If the icons don't download
+  anything after publishing, check your plugin's content-filtering
+  settings.
+-->
+<title>Frosty Fleet Notice of Race</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  .ff16-nor {
+    --ink: #12232f;
+    --navy: #1d3d52;
+    --steel: #3f7690;
+    --ice: #dbe9ee;
+    --frost: #f7fafb;
+    --paper: #ffffff;
+    --flag: #a24a1c;
+    --rule: #c7dbe2;
+    color-scheme: light dark;
+    background: var(--frost);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 0 4rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    .ff16-nor:not([data-theme="light"]) {
+      --ink: #e8f1f4;
+      --navy: #bcd9e4;
+      --steel: #86bad0;
+      --ice: #1c3543;
+      --frost: #0b1720;
+      --paper: #101f29;
+      --flag: #e08a4f;
+      --rule: #234152;
+    }
+  }
+  .ff16-nor[data-theme="dark"] {
+    --ink: #e8f1f4;
+    --navy: #bcd9e4;
+    --steel: #86bad0;
+    --ice: #1c3543;
+    --frost: #0b1720;
+    --paper: #101f29;
+    --flag: #e08a4f;
+    --rule: #234152;
+  }
+
+  .ff16-nor * { box-sizing: border-box; }
+  .ff16-nor h1, .ff16-nor h2, .ff16-nor h3 {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    text-wrap: balance;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ff16-nor p { margin: 0 0 1rem; }
+  .ff16-nor a { color: var(--steel); text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+  .ff16-nor a:hover { color: var(--navy); }
+
+  .ff16-nor__header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 2.75rem 1.5rem 2.25rem;
+    text-align: center;
+  }
+  .ff16-nor__logo {
+    display: block;
+    width: 128px;
+    height: auto;
+    margin: 0 auto 1.25rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    .ff16-nor:not([data-theme="light"]) .ff16-nor__logo { filter: invert(1); }
+  }
+  .ff16-nor[data-theme="dark"] .ff16-nor__logo { filter: invert(1); }
+  .ff16-nor__kicker {
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 0.6rem;
+  }
+  .ff16-nor__title {
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    line-height: 1.08;
+  }
+  .ff16-nor__subtitle {
+    margin-top: 0.65rem;
+    font-size: 1.02rem;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  .ff16-nor__icicles {
+    display: block;
+    width: 100%;
+    height: 22px;
+  }
+  .ff16-nor__icicles path { fill: var(--ice); }
+
+  .ff16-nor__body { padding: 0 1.5rem; }
+
+  .ff16-section {
+    padding: 2.4rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ff16-section:last-of-type { border-bottom: none; }
+  .ff16-section__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+  }
+  .ff16-section__num {
+    font-family: "Fraunces", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--steel);
+    min-width: 1.6rem;
+  }
+  .ff16-section h2 { font-size: 1.45rem; }
+
+  .ff16-nor__lede {
+    font-size: 1.08rem;
+  }
+
+  .ff16-callout {
+    background: var(--ice);
+    border-left: 3px solid var(--steel);
+    border-radius: 4px;
+    padding: 1rem 1.15rem;
+    margin: 1rem 0;
+    font-size: 0.97rem;
+  }
+  .ff16-callout strong { color: var(--navy); }
+
+  .ff16-list {
+    margin: 0 0 1rem;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: rule;
+  }
+  .ff16-list li {
+    counter-increment: rule;
+    position: relative;
+    padding-left: 2.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .ff16-list li::before {
+    content: "2." counter(rule);
+    position: absolute;
+    left: 0;
+    font-family: "Fraunces", serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--steel);
+  }
+  .ff16-list .tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--steel);
+    border: 1px solid var(--steel);
+    border-radius: 3px;
+    padding: 0.05rem 0.4rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .ff16-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    margin: 1rem 0;
+  }
+  .ff16-nor table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 460px;
+    font-size: 0.92rem;
+  }
+  .ff16-nor caption {
+    caption-side: top;
+    text-align: left;
+    padding: 0.6rem 0.9rem 0;
+    font-size: 0.8rem;
+    color: var(--ink);
+    opacity: 0.65;
+  }
+  .ff16-nor th, .ff16-nor td {
+    padding: 0.55rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .ff16-nor thead th {
+    background: var(--navy);
+    color: var(--frost);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ff16-nor tbody tr:last-child td { border-bottom: none; }
+  .ff16-nor tbody tr:hover { background: var(--ice); }
+  .ff16-nor td.num, .ff16-nor th.num { font-variant-numeric: tabular-nums; }
+  .ff16-schedule tr.is-bye { background: color-mix(in srgb, var(--flag) 8%, transparent); }
+  .ff16-schedule td.notes { font-size: 0.85rem; opacity: 0.75; }
+  .tide-arrow { font-weight: 700; margin-left: 0.15rem; }
+
+  .tag-chip {
+    display: inline-block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .tag-chip--race { background: var(--ice); color: var(--navy); }
+  .tag-chip--bye {
+    background: transparent;
+    border: 1px solid var(--flag);
+    color: var(--flag);
+  }
+  .tag-chip--conditional {
+    background: transparent;
+    border: 1px dashed var(--flag);
+    color: var(--flag);
+  }
+  .cal-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-left: 0.4rem;
+    color: var(--steel);
+    vertical-align: middle;
+    border-radius: 3px;
+  }
+  .cal-add:hover, .cal-add:focus-visible { color: var(--navy); background: var(--ice); }
+
+  .ff16-venues { display: grid; gap: 1rem; margin: 1rem 0; }
+  .ff16-venue {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1rem 1.15rem;
+  }
+  .ff16-venue h3 { font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .ff16-venue .coords { font-size: 0.82rem; opacity: 0.65; font-variant-numeric: tabular-nums; }
+  .map-link {
+    display: inline-block;
+    margin-top: 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .ff16-formula {
+    font-family: "Fraunces", serif;
+    font-size: 1.15rem;
+    text-align: center;
+    background: var(--ice);
+    border-radius: 6px;
+    padding: 1.1rem;
+    margin: 1.1rem 0;
+    color: var(--navy);
+  }
+  .ff16-formula small {
+    display: block;
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 0.4rem;
+  }
+
+  .ff16-example {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.2rem 1.3rem;
+    margin: 1.2rem 0;
+    background: var(--paper);
+  }
+  .ff16-example h4 {
+    font-family: "Fraunces", serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--steel);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.7rem;
+  }
+  .ff16-example .dropped { text-decoration: line-through; opacity: 0.5; }
+  .ff16-example .total-row td { font-weight: 700; border-top: 2px solid var(--navy); }
+
+  .ff16-committee { display: grid; gap: 0.9rem; margin: 1rem 0 1.5rem; }
+  .ff16-committee-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.85rem 1.1rem;
+  }
+  .ff16-committee-card .role { font-weight: 600; color: var(--navy); }
+  .ff16-committee-card .name { font-size: 0.95rem; }
+  .ff16-committee-card .contact { font-size: 0.85rem; opacity: 0.7; text-align: right; }
+  .ff16-committee-card .contact.tbd { font-style: italic; }
+
+  .ff16-nor__footer {
+    text-align: center;
+    padding: 2rem 1.5rem 0;
+    font-size: 0.85rem;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 520px) {
+    .ff16-committee-card { flex-direction: column; align-items: flex-start; }
+    .ff16-committee-card .contact { text-align: left; }
+  }
+</style>
+
+<div class="ff16-nor">
+
+  <header class="ff16-nor__header">
+    <img class="ff16-nor__logo" src="REPLACE-WITH-LOGO-MEDIA-URL" alt="Frosty Fleet #16, Beverly, Mass logo">
+    <p class="ff16-nor__kicker">Notice of Race &amp; Sailing Instructions</p>
+    <h1 class="ff16-nor__title">Cape Cod Frosty Fleet&nbsp;#16</h1>
+    <p class="ff16-nor__subtitle">2026–2027 Season · Beverly, Massachusetts</p>
+  </header>
+
+  <svg class="ff16-nor__icicles" viewBox="0 0 400 22" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,0 L400,0 L400,4 L380,20 L360,4 L340,20 L320,4 L300,20 L280,4 L260,20 L240,4 L220,20 L200,4 L180,20 L160,4 L140,20 L120,4 L100,20 L80,4 L60,20 L40,4 L20,20 L0,4 Z"></path>
+  </svg>
+
+  <div class="ff16-nor__body">
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">1</span><h2>Event</h2></div>
+      <p class="ff16-nor__lede">Cape Cod Frosty Fleet #16 (FF16) organizes weekend races of Cape Cod Frosty Class boats in Beverly, Massachusetts.</p>
+      <p>This Notice of Race (NoR) covers the 2026–2027 season.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">2</span><h2>Rules</h2></div>
+      <p>FF16 follows the rules of the Cape Cod Frosty Class Association (CCFCA), with the following modifications and additions:</p>
+      <ol class="ff16-list">
+        <li><span class="tag">Addition</span>In addition to the required life jacket, dry suits are required unless explicitly waived for a given race by the Race and Safety Committee.</li>
+        <li><span class="tag">Modification</span>The minimum combined weight of hull and crew is voluntary and not required.</li>
+      </ol>
+      <p>For full CCFCA rules, see <a href="http://www.capecodfrosty.org/rules.htm">capecodfrosty.org/rules.htm</a>.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">3</span><h2>Eligibility</h2></div>
+      <p>All are invited to race. Racers without a Cape Cod Frosty are encouraged to contact the Fleet Captain, who may be able to arrange a loaner boat.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">4</span><h2>Registration</h2></div>
+      <p>No registration is required. New racers are encouraged to contact the Fleet Captain to be added to race-day venue updates.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">5</span><h2>Fees</h2></div>
+      <p>To encourage participation, no fee is required from racers who take part in fewer than 3 races.</p>
+      <p>Racers who take part in 3 or more races pay <strong>$25</strong> to the Treasurer. Funds support season prizes, safety-boat fuel and upkeep, and other expenses approved by the Treasurer.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">6</span><h2>Schedule of Races</h2></div>
+      <p>We aim to race every other week, so racers can also sail with Frosty Fleet #9. The schedule targets <strong>12 races</strong> across the season.</p>
+      <p>Races start at either <strong>11:00 AM</strong> or <strong>1:00 PM</strong>, whichever is closer to high tide.</p>
+      <div class="ff16-callout">
+        <strong>BYE</strong> weeks occur when both start times fall more than 4 hours from high tide, or when the tide can't hold at least 3 ft for the full 2-hour race.<br><br>
+        <strong>BYE OR [time]</strong> weeks have workable tidal conditions but default to BYE unless the conditions in that row's Notes are met.
+      </div>
+      <p><strong>Season:</strong> Sunday, November 1, 2026 – Sunday, April 11, 2027</p>
+
+      <div class="ff16-table-wrap">
+        <table class="ff16-schedule">
+          <caption>Scroll to see all columns on small screens</caption>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Race Time</th>
+              <th class="num">Tide at Start</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Sun, Nov 1, 2026</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMTAxQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTEwMVQxMzAwMDANCkRURU5EOjIwMjYxMTAxVDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261101.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">5.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Nov 8, 2026</td><td><span class="tag-chip tag-chip--conditional">BYE or 11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMTA4QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTEwOFQxMTAwMDANCkRURU5EOjIwMjYxMTA4VDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgKHRlbnRhdGl2ZSkgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkJhY2t1cCBkYXRlIC0tIG9ubHkgaGFwcGVucyBpZiB0aGUgTm92IDEgcmFjZSBpcyBjYW5jZWxlZC5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261108.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">9.7 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">Backup date if the Nov 1 race is canceled</td></tr>
+            <tr><td>Sun, Nov 15, 2026</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMTE1QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTExNVQxMzAwMDANCkRURU5EOjIwMjYxMTE1VDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261115.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">7.0 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Nov 22, 2026</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">7.0 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">11:00 AM start (7.0 ft) drops to 2.5 ft during the 2-hr race</td></tr>
+            <tr><td>Sun, Nov 29, 2026</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMTI5QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTEyOVQxMzAwMDANCkRURU5EOjIwMjYxMTI5VDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261129.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Dec 6, 2026</td><td><span class="tag-chip tag-chip--conditional">BYE or 11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMjA2QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTIwNlQxMTAwMDANCkRURU5EOjIwMjYxMjA2VDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgKHRlbnRhdGl2ZSkgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkJhY2t1cCBkYXRlIC0tIG9ubHkgaGFwcGVucyBpZiB0aGUgTm92IDI5IHJhY2UgaXMgY2FuY2VsZWQuXG5Db25maXJtIHRoZSB2ZW51ZSBhbmQgYW55IGxhc3QtbWludXRlIGNoYW5nZXMgd2l0aCB0aGUgRmxlZXQgQ2FwdGFpbiBiZWZvcmUgaGVhZGluZyBvdXQuDQpMT0NBVElPTjpCZXZlcmx5LCBNQQ0KRU5EOlZFVkVOVA0KRU5EOlZDQUxFTkRBUg0K" download="FF16-20261206.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.0 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">Backup date if the Nov 29 race is canceled</td></tr>
+            <tr><td>Sun, Dec 13, 2026</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMjEzQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTIxM1QxMzAwMDANCkRURU5EOjIwMjYxMjEzVDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261213.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.6 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Dec 20, 2026</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">3.9 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">11:00 AM start (3.9 ft) is below the 4 ft minimum</td></tr>
+            <tr><td>Sun, Dec 27, 2026</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjYxMjI3QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI2MTIyN1QxMzAwMDANCkRURU5EOjIwMjYxMjI3VDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20261227.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">10.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Jan 3, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">5.1 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">11:00 AM start (5.1 ft) drops to 1.2 ft during the 2-hr race</td></tr>
+            <tr><td>Sun, Jan 10, 2027</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMTEwQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDExMFQxMzAwMDANCkRURU5EOjIwMjcwMTEwVDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270110.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">9.0 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Jan 17, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">—</td><td class="notes">High tide 5.3 hrs from nearest start (11 AM/1 PM)</td></tr>
+            <tr><td>Sun, Jan 24, 2027</td><td><span class="tag-chip tag-chip--race">1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMTI0QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDEyNFQxMzAwMDANCkRURU5EOjIwMjcwMTI0VDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270124.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">10.8 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Jan 31, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">—</td><td class="notes">High tide 4.7 hrs from nearest start (11 AM/1 PM)</td></tr>
+            <tr><td>Sun, Feb 7, 2027</td><td><span class="tag-chip tag-chip--race">11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMjA3QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDIwN1QxMTAwMDANCkRURU5EOjIwMjcwMjA3VDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270207.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Feb 14, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">2.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">1:00 PM start (2.8 ft) is below the 4 ft minimum</td></tr>
+            <tr><td>Sun, Feb 21, 2027</td><td><span class="tag-chip tag-chip--race">11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMjIxQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDIyMVQxMTAwMDANCkRURU5EOjIwMjcwMjIxVDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270221.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">10.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Feb 28, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">—</td><td class="notes">High tide 4.3 hrs from nearest start (11 AM/1 PM)</td></tr>
+            <tr><td>Sun, Mar 7, 2027</td><td><span class="tag-chip tag-chip--race">11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMzA3QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDMwN1QxMTAwMDANCkRURU5EOjIwMjcwMzA3VDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270307.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.8 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Mar 14, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">3.3 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">1:00 PM start (3.3 ft) is below the 4 ft minimum</td></tr>
+            <tr><td>Sun, Mar 21, 2027</td><td><span class="tag-chip tag-chip--race">11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwMzIxQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDMyMVQxMTAwMDANCkRURU5EOjIwMjcwMzIxVDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270321.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">10.3 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Mar 28, 2027</td><td><span class="tag-chip tag-chip--bye">BYE</span></td><td class="num">3.1 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">1:00 PM start (3.1 ft) is below the 4 ft minimum</td></tr>
+            <tr><td>Sun, Apr 4, 2027</td><td><span class="tag-chip tag-chip--race">11:00 AM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwNDA0QGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDQwNFQxMTAwMDANCkRURU5EOjIwMjcwNDA0VDEzMDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270404.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">8.5 ft <span class="tide-arrow tide-arrow--falling" title="Falling">↓</span></td><td class="notes">—</td></tr>
+            <tr class="is-bye"><td>Sun, Apr 11, 2027</td><td><span class="tag-chip tag-chip--conditional">BYE or 1:00 PM</span><a class="cal-add" href="data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0ZGMTYvL05vdGljZSBvZiBSYWNlLy9FTg0KQ0FMU0NBTEU6R1JFR09SSUFODQpCRUdJTjpWRVZFTlQNClVJRDpmZjE2LTIwMjcwNDExQGZyb3N0eWZsZWV0MTYNCkRUU1RBTVA6MjAyNjA5MDlUMDAwMDAwWg0KRFRTVEFSVDoyMDI3MDQxMVQxMzAwMDANCkRURU5EOjIwMjcwNDExVDE1MDAwMA0KU1VNTUFSWTpGRjE2IFJhY2UgKHRlbnRhdGl2ZSkgLSBDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2DQpERVNDUklQVElPTjpDYXBlIENvZCBGcm9zdHkgRmxlZXQgIzE2IHdlZWtlbmQgcmFjZS5cbkJhY2t1cCBkYXRlIC0tIG9ubHkgaGFwcGVucyBpZiB0aGUgQXByIDQgcmFjZSBpcyBjYW5jZWxlZC5cbkNvbmZpcm0gdGhlIHZlbnVlIGFuZCBhbnkgbGFzdC1taW51dGUgY2hhbmdlcyB3aXRoIHRoZSBGbGVldCBDYXB0YWluIGJlZm9yZSBoZWFkaW5nIG91dC4NCkxPQ0FUSU9OOkJldmVybHksIE1BDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=" download="FF16-20270411.ics" title="Add to calendar" aria-label="Add to calendar"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="10" y1="16" x2="14" y2="16"></line></svg></a></td><td class="num">5.8 ft <span class="tide-arrow tide-arrow--rising" title="Rising">↑</span></td><td class="notes">Backup date if the Apr 4 race is canceled</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">7</span><h2>Courses</h2></div>
+      <p>Courses are set by the Race and Safety Committee at one of the venues below.</p>
+      <div class="ff16-venues">
+        <div class="ff16-venue">
+          <h3>Venue A — Kernwood Boat Ramp</h3>
+          <p>Kernwood St, Salem, MA 01970</p>
+          <p class="coords">42.54036, -70.89930</p>
+          <a class="map-link" href="https://www.google.com/maps?q=42.54036,-70.89930" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="ff16-venue">
+          <h3>Venue B — Sandy Point Beach</h3>
+          <p>End of Water Street, Beverly, MA</p>
+          <p class="coords">42.54041, -70.87824</p>
+          <a class="map-link" href="https://www.google.com/maps?q=42.54041,-70.87824" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="ff16-venue">
+          <h3>Venue C — Jubilee Yacht Club</h3>
+          <p class="coords">Location TBD</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">8</span><h2>Prizes</h2></div>
+      <p>Trophies are awarded for first through third place, based on scoring for the season.</p>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">9</span><h2>Scoring</h2></div>
+      <p>FF16 uses a <strong>high-point scoring system</strong>: every finisher earns points for the size of the fleet they raced in, plus one point for each boat they beat.</p>
+
+      <div class="ff16-formula">
+        <small>Score for a race</small>
+        (Total number of racers) + (Number of racers who finish behind you)
+      </div>
+
+      <p>In a race with 8 boats, 1st place beats 7 boats and scores 8 + 7 = <strong>15</strong>. 2nd place beats 6 and scores 8 + 6 = <strong>14</strong>, and so on down to last place, which beats 0 boats but still scores 8 + 0 = <strong>8</strong> — one point for every boat in the race. A boat that does not race (DNR) scores <strong>0 points</strong> for that race, since it never finishes.</p>
+
+      <p>Each racer's <strong>lowest-scoring 20% of races that season are dropped</strong> (rounded down to the nearest whole race). A racer's season total is the sum of their remaining scores.</p>
+
+      <div class="ff16-example">
+        <h4>Example</h4>
+        <p>Alex sails in 9 of a 10-race season and DNRs one race. Since 20% of 10 races is 2, Alex's <strong>2 lowest scores are dropped</strong> before the season total is added up — the DNR (0 points) is automatically one of them:</p>
+        <div class="ff16-table-wrap">
+          <table>
+            <thead>
+              <tr><th>Race</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th><th class="num">6</th><th class="num">7</th><th class="num">8</th><th class="num">9</th><th class="num">10</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alex's score</td>
+                <td class="num">13</td><td class="num">10</td><td class="num">17</td>
+                <td class="num dropped">8</td><td class="num">14</td><td class="num">15</td>
+                <td class="num dropped">DNR (0)</td><td class="num">17</td><td class="num">9</td><td class="num">12</td>
+              </tr>
+              <tr class="total-row">
+                <td>Season total</td>
+                <td class="num" colspan="9">13 + 10 + 17 + 14 + 15 + 17 + 9 + 12 (races 4 and 7 dropped)</td>
+                <td class="num">107</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.9rem; margin-bottom:0; font-size:0.9rem; opacity:0.8;">Alex's DNR doesn't hurt the season total at all here — it's simply one of the two throwouts, alongside the other low score of 8.</p>
+      </div>
+    </section>
+
+    <section class="ff16-section">
+      <div class="ff16-section__head"><span class="ff16-section__num">10</span><h2>Further Information</h2></div>
+
+      <h3 style="font-size:1.05rem; margin-bottom:0.75rem;">Regatta Committee Members</h3>
+      <div class="ff16-committee">
+        <div class="ff16-committee-card">
+          <div><span class="role">Fleet Captain</span><br><span class="name">Josh Abell</span></div>
+          <div class="contact"><a href="mailto:joshabell@gmail.com">joshabell@gmail.com</a><br>978-969-2665</div>
+        </div>
+        <div class="ff16-committee-card">
+          <div><span class="role">Race and Safety Committee</span><br><span class="name">Robert Minelli</span></div>
+          <div class="contact tbd">Contact info to follow</div>
+        </div>
+        <div class="ff16-committee-card">
+          <div><span class="role">Treasurer</span><br><span class="name">Mike Barnum</span></div>
+          <div class="contact tbd">Contact info to follow</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem; margin-bottom:0.75rem;">Communications</h3>
+      <p>We're setting up a single channel for race-day updates and schedule changes — details to follow. In the meantime, contact the Fleet Captain directly to be added to updates.</p>
+    </section>
+
+  </div>
+
+  <footer class="ff16-nor__footer">
+    <p>Cape Cod Frosty Fleet #16 · Beverly, Massachusetts</p>
+  </footer>
+
+</div>
