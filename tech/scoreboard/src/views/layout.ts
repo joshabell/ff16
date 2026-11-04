@@ -18,31 +18,37 @@ export function layout({ title, body, adminEmail, flash, errors }: LayoutOptions
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} · Frosty Fleet #16</title>
+<title>${title} – Frosty Fleet 16</title>
 <link rel="icon" href="/logo.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Public+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;700&display=swap">
 <link rel="stylesheet" href="/style.css">
 ${admin ? html`<meta name="robots" content="noindex">` : ''}
 </head>
 <body>
-<header class="top${admin ? ' admin' : ''}">
-  <div class="in">
-    <img src="/logo.png" alt="">
-    <a class="brand" href="${admin ? '/admin' : '/'}">Frosty Fleet #16${admin ? ' · Race Committee' : ''}</a>
-    <nav>
-      ${admin
-        ? html`<a href="/admin">Race days</a><a href="/admin/racers">Racers</a><a href="/admin/audit">Change log</a><a href="/">Public site</a>`
-        : html`<a href="/">Leaderboard</a><a href="/schedule">Schedule</a>`}
-    </nav>
-    ${admin ? html`<div class="who">Signed in as ${adminEmail}</div>` : ''}
+<div class="site${admin ? ' admin' : ''}">
+<div class="site-inner">
+<header class="site-header">
+  <div class="site-branding">
+    <p class="site-title"><a href="https://ff16.org/">Frosty Fleet 16</a></p>
+    <p class="site-description">${admin ? 'Scoreboard · Race Committee' : 'Scoreboard'}</p>
   </div>
+  <nav class="main-nav" aria-label="Scoreboard">
+    ${admin
+      ? html`<a href="/admin">Race days</a><a href="/admin/racers">Racers</a><a href="/admin/audit">Change log</a><a href="/">Public standings</a>`
+      : html`<a href="/">Standings</a><a href="/schedule">Schedule</a><a href="https://ff16.org/">ff16.org</a>`}
+  </nav>
+  ${admin ? html`<div class="who">Signed in as ${adminEmail}</div>` : ''}
 </header>
-<main>
+<main class="site-main">
 ${flash ? html`<div class="flash" role="status">${flash}</div>` : ''}
 ${errors && errors.length ? html`<div class="errors" role="alert"><ul>${errors.map((e) => html`<li>${e}</li>`)}</ul></div>` : ''}
 ${body}
 </main>
-<footer>Cape Cod Frosty Fleet #16 · Beverly, Massachusetts · High-point scoring per the Notice of Race</footer>
+<footer class="site-footer">
+  <div class="site-info"><a href="https://ff16.org/">Frosty Fleet 16</a> · Beverly, Massachusetts · High-point scoring per the Notice of Race</div>
+</footer>
+</div>
+</div>
 </body>
 </html>`;
 }

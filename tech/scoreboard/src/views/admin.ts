@@ -166,7 +166,7 @@ export function raceFormPage({ day, race, racers, values, notes }: RaceFormOptio
         })}
       </ol>
       <div class="stack" style="margin-top:1rem">
-        <label for="notes" style="font-weight:600;font-size:0.9rem">Notes (optional)</label>
+        <label for="notes">Notes (optional)</label>
         <input type="text" id="notes" name="notes" value="${notes}" placeholder="e.g. light SW breeze, windward-leeward x2">
       </div>
       <div class="actions">
