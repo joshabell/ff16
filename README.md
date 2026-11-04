@@ -5,7 +5,8 @@ Notice of Race and related materials for FF16, a winter dinghy racing fleet in B
 ## Structure
 
 - `assets/` — shared brand assets (fleet logo)
-- `seasons/season-N-YYYY-YYYY/` — one folder per season, containing notice-of-race, etc.ß
+- `seasons/season-N-YYYY-YYYY/` — one folder per season, containing notice-of-race, etc.
+- `tech/scoreboard/` — online scoring system (Cloudflare Worker); see its README
 
 ## Publishing a Notice of Race
 

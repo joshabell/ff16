@@ -1,0 +1,103 @@
+/* FF16 scoreboard — palette shared with the Notice of Race */
+:root {
+  --ink: #12232f; --navy: #1d3d52; --steel: #3f7690; --ice: #dbe9ee; --frost: #f7fafb;
+  --paper: #ffffff; --flag: #a24a1c; --rule: #c7dbe2; --good: #2f6f4f; --muted: #5a6b76;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e8f1f4; --navy: #bcd9e4; --steel: #86bad0; --ice: #1c3543; --frost: #0b1720;
+    --paper: #101f29; --flag: #e08a4f; --rule: #234152; --good: #7cc8a0; --muted: #9fb3bd;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #e8f1f4; --navy: #bcd9e4; --steel: #86bad0; --ice: #1c3543; --frost: #0b1720;
+  --paper: #101f29; --flag: #e08a4f; --rule: #234152; --good: #7cc8a0; --muted: #9fb3bd;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--frost); color: var(--ink);
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5; font-size: 16px;
+}
+a { color: var(--steel); text-underline-offset: 2px; }
+a:hover { color: var(--navy); }
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--navy); line-height: 1.2; margin: 0 0 0.6rem; }
+h1 { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+h2 { font-size: 1.35rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; margin-top: 1.4rem; }
+p { margin: 0 0 1rem; }
+
+.top { background: var(--paper); border-bottom: 1px solid var(--rule); }
+.top .in { max-width: 980px; margin: 0 auto; padding: 0.8rem 16px; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.top img { width: 44px; height: auto; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .top img { filter: invert(1); } }
+.top .brand { font-family: "Fraunces", Georgia, serif; font-weight: 600; color: var(--navy); font-size: 1.1rem; text-decoration: none; }
+.top nav { margin-left: auto; display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.92rem; }
+.top .who { font-size: 0.8rem; color: var(--muted); width: 100%; text-align: right; }
+.top.admin { border-bottom: 3px solid var(--flag); }
+
+main { max-width: 980px; margin: 0 auto; padding: 1.5rem 16px 4rem; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+
+.flash { background: var(--ice); border-left: 3px solid var(--good); border-radius: 4px; padding: 0.7rem 1rem; margin-bottom: 1rem; }
+.errors { background: color-mix(in srgb, var(--flag) 12%, var(--paper)); border-left: 3px solid var(--flag); border-radius: 4px; padding: 0.7rem 1rem; margin-bottom: 1rem; }
+.errors ul { margin: 0; padding-left: 1.2rem; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); margin: 0.8rem 0 1.2rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: middle; }
+thead th { background: var(--navy); color: var(--frost); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+thead tr.days th[colspan] { border-bottom: 1px solid color-mix(in srgb, var(--frost) 35%, transparent); }
+thead th a { color: inherit; }
+tbody tr:last-child td { border-bottom: none; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+td.c, th.c { text-align: center; }
+.standings td.racer { white-space: nowrap; font-weight: 600; position: sticky; left: 0; background: var(--paper); }
+.standings th.racer { position: sticky; left: 0; z-index: 1; }
+.standings td.total { font-weight: 700; font-size: 1rem; }
+.drop { text-decoration: line-through; opacity: 0.45; }
+.code { font-size: 0.75rem; font-weight: 700; color: var(--flag); }
+.dnr { color: var(--muted); }
+.sail { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
+.row-bye td { color: var(--muted); }
+.chip { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 3px; white-space: nowrap; }
+.chip.scheduled { background: var(--ice); color: var(--navy); }
+.chip.sailed { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+.chip.bye, .chip.cancelled { border: 1px solid var(--flag); color: var(--flag); }
+.chip.fee { border: 1px solid var(--steel); color: var(--steel); }
+
+.card { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1.1rem; margin: 0.8rem 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+
+form.stack label { display: block; font-weight: 600; font-size: 0.9rem; margin: 0.7rem 0 0.25rem; }
+input[type=text], input[type=date], input[type=time], select, textarea {
+  font: inherit; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 0.5rem 0.6rem; width: 100%; max-width: 28rem;
+}
+textarea { min-height: 4rem; }
+.btn, button {
+  font: inherit; font-weight: 600; border: 1px solid var(--steel); background: var(--steel); color: var(--paper);
+  padding: 0.55rem 1rem; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block;
+}
+.btn.secondary, button.secondary { background: transparent; color: var(--steel); }
+button.danger { background: transparent; border-color: var(--flag); color: var(--flag); }
+.actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+.inline { display: inline; }
+
+/* Race entry */
+.entry { list-style: none; padding: 0; margin: 0.6rem 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); }
+.entry li { display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); }
+.entry li:last-child { border-bottom: none; }
+.entry .tap {
+  flex: 1; text-align: left; background: transparent; color: var(--ink); border: 1px solid transparent;
+  padding: 0.6rem 0.5rem; font-weight: 600; border-radius: 6px;
+}
+.entry .tap:hover { border-color: var(--rule); }
+.entry li.placed .tap { background: var(--ice); color: var(--navy); }
+.entry select { width: 6.5rem; flex: none; }
+.entry .badge { width: 2rem; text-align: center; font-weight: 700; color: var(--steel); font-variant-numeric: tabular-nums; }
+
+footer { max-width: 980px; margin: 0 auto; padding: 0 16px 2rem; font-size: 0.82rem; color: var(--muted); }
+.standings td.total { border-right: 2px solid var(--rule); }
