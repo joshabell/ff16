@@ -1,0 +1,28 @@
+{
+	// Cloudflare Worker configuration for the FF16 scoreboard.
+	// See README.md for first-time setup.
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "ff16-scoreboard",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-01",
+	"assets": {
+		"directory": "./public"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "ff16-scoreboard",
+			"database_id": "1efb45c7-f4c0-43ef-a466-b6eb3219f63e",
+			"migrations_dir": "migrations"
+		}
+	],
+	"vars": {
+		// Filled in after creating the Cloudflare Access application (README step 4).
+		// Until both are set, every /admin page refuses access (fails closed).
+		"ACCESS_TEAM_DOMAIN": "frosty-bird-3d44.cloudflareaccess.com",
+		"ACCESS_AUD": "2aea8011bd376aa6c745f30c77b4daae664b961904326ddb4112de6edb163241"
+	}
+}

@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FF16 Scoreboard Proposals</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ink: #12232f;
+    --navy: #1d3d52;
+    --steel: #3f7690;
+    --ice: #dbe9ee;
+    --frost: #f7fafb;
+    --paper: #ffffff;
+    --flag: #a24a1c;
+    --rule: #c7dbe2;
+    --good: #2f6f4f;
+    --muted: #5a6b76;
+    --code-bg: #eef4f6;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e8f1f4;
+      --navy: #bcd9e4;
+      --steel: #86bad0;
+      --ice: #1c3543;
+      --frost: #0b1720;
+      --paper: #101f29;
+      --flag: #e08a4f;
+      --rule: #234152;
+      --good: #7cc8a0;
+      --muted: #9fb3bd;
+      --code-bg: #0f2430;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e8f1f4;
+    --navy: #bcd9e4;
+    --steel: #86bad0;
+    --ice: #1c3543;
+    --frost: #0b1720;
+    --paper: #101f29;
+    --flag: #e08a4f;
+    --rule: #234152;
+    --good: #7cc8a0;
+    --muted: #9fb3bd;
+    --code-bg: #0f2430;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--frost);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px 5rem; }
+  h1, h2, h3, h4 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    color: var(--navy);
+    text-wrap: balance;
+    line-height: 1.2;
+  }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); margin: 0; }
+  h2 { font-size: 1.6rem; margin: 0 0 0.8rem; }
+  h3 { font-size: 1.2rem; margin: 2rem 0 0.6rem; }
+  h4 { font-size: 1rem; margin: 1.4rem 0 0.4rem; }
+  p { margin: 0 0 1rem; }
+  a { color: var(--steel); text-underline-offset: 2px; }
+  a:hover { color: var(--navy); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; background: var(--code-bg); padding: 0.05rem 0.3rem; border-radius: 3px; }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin: 0.6rem 0 1.2rem;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  pre .c { color: var(--muted); font-style: italic; }
+
+  header.hero {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 2.8rem 16px 2.2rem;
+    text-align: center;
+  }
+  .kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); margin: 0 0 0.6rem; }
+  .sub { margin-top: 0.7rem; color: var(--muted); }
+
+  nav.toc {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 2rem 0 0;
+  }
+  nav.toc ol { margin: 0.3rem 0 0; padding-left: 1.3rem; columns: 2 16rem; }
+  nav.toc li { margin-bottom: 0.2rem; }
+
+  section { padding: 2.6rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  .num { font-family: "Fraunces", serif; color: var(--steel); margin-right: 0.4rem; }
+
+  .callout {
+    background: var(--ice);
+    border-left: 3px solid var(--steel);
+    border-radius: 4px;
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+  }
+  .callout.rec { border-left-color: var(--good); }
+  .callout.warn { border-left-color: var(--flag); }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; margin: 1rem 0; background: var(--paper); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th { background: var(--navy); color: var(--frost); font-size: 0.76rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: none; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .cmp td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .cmp td.best { background: color-mix(in srgb, var(--good) 12%, transparent); }
+  .drop { text-decoration: line-through; opacity: 0.45; }
+  .total { font-weight: 700; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0; }
+  .card { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1.1rem; }
+  .card h3 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .card .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 3px; padding: 0.1rem 0.45rem; margin-bottom: 0.5rem; border: 1px solid var(--steel); color: var(--steel); }
+  .card .tag.rec { border-color: var(--good); color: var(--good); }
+  .card p { margin: 0 0 0.4rem; font-size: 0.93rem; }
+
+  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .pc > div { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 0.8rem 1rem; }
+  .pc h4 { margin: 0 0 0.4rem; }
+  .pc ul { margin: 0; padding-left: 1.1rem; font-size: 0.93rem; }
+  .pc li { margin-bottom: 0.3rem; }
+  .pros h4 { color: var(--good); }
+  .cons h4 { color: var(--flag); }
+
+  ol.steps, ul.plain { padding-left: 1.3rem; }
+  ol.steps li, ul.plain li { margin-bottom: 0.4rem; }
+
+  /* Diagrams */
+  figure { margin: 1.4rem 0; }
+  .diagram { overflow-x: auto; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 0.6rem; }
+  .diagram svg { display: block; width: 100%; min-width: 640px; height: auto; }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+  svg .box { fill: var(--paper); stroke: var(--steel); stroke-width: 1.5; }
+  svg .box.person { fill: var(--ice); stroke: var(--navy); }
+  svg .box.data { fill: var(--ice); stroke: var(--steel); }
+  svg .box.ci { fill: var(--paper); stroke: var(--flag); stroke-dasharray: 0; }
+  svg .box.guard { fill: color-mix(in srgb, var(--good) 14%, var(--paper)); stroke: var(--good); }
+  svg .zone { fill: none; stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 6 5; }
+  svg .zlabel { fill: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  svg .t { fill: var(--navy); font-size: 14px; font-weight: 700; text-anchor: middle; font-family: "Public Sans", sans-serif; }
+  svg .s { fill: var(--ink); font-size: 11.5px; text-anchor: middle; opacity: 0.8; font-family: "Public Sans", sans-serif; }
+  svg .lbl { fill: var(--muted); font-size: 11px; text-anchor: middle; font-family: "Public Sans", sans-serif; }
+  svg .lbl.l { text-anchor: start; }
+  svg .ar { stroke: var(--steel); stroke-width: 1.6; fill: none; marker-end: url(#ah); }
+  svg .ar.w { stroke: var(--good); marker-end: url(#ahg); }
+  svg .ar.d { stroke: var(--flag); stroke-dasharray: 5 4; marker-end: url(#ahf); }
+  svg .head { fill: var(--steel); }
+  svg .head.g { fill: var(--good); }
+  svg .head.f { fill: var(--flag); }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+  .legend span::before { content: ""; display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--steel); vertical-align: middle; margin-right: 0.35rem; }
+  .legend .lg-w::before { border-top-color: var(--good); }
+  .legend .lg-d::before { border-top: 2px dashed var(--flag); }
+
+  .formula { font-family: "Fraunces", serif; font-size: 1.1rem; text-align: center; background: var(--ice); border-radius: 6px; padding: 1rem; margin: 1rem 0; color: var(--navy); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding-top: 2rem; }
+  @media (max-width: 520px) { h2 { font-size: 1.35rem; } }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG arrowheads (referenced by every diagram) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head g" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ahf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head f" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <p class="kicker">Cape Cod Frosty Fleet #16 · Technology proposal</p>
+  <h1>Online Scoring System: Three Proposals</h1>
+  <p class="sub">Public leaderboard, Race Committee tools, free hosting, code and CI in GitHub · Prepared November 2026</p>
+</header>
+
+<div class="wrap">
+
+<nav class="toc" aria-label="Contents">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#summary">Summary &amp; recommendation</a></li>
+    <li><a href="#common">What every proposal shares</a></li>
+    <li><a href="#a">Proposal A — GitHub only</a></li>
+    <li><a href="#b">Proposal B — Cloudflare (recommended)</a></li>
+    <li><a href="#c">Proposal C — AWS serverless</a></li>
+    <li><a href="#others">Other options considered</a></li>
+    <li><a href="#ci">GitHub Actions primer</a></li>
+    <li><a href="#next">Decisions &amp; next steps</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================================ -->
+<section id="summary">
+  <h2><span class="num">1</span>Summary &amp; recommendation</h2>
+  <p>What we need: a <strong>public leaderboard</strong> that applies the Notice of Race high-point scoring, plus tools for managing <strong>racers</strong>, <strong>race days</strong> and <strong>individual race results</strong> that only the <strong>Race Committee (RC)</strong> can use. User administration should be simple, hosting should be free, and the code should live in GitHub with automated testing and deployment (GitHub Actions).</p>
+
+  <p>FF16 is small. Last season had about 6 racers and 3–5 races per race day, and this season targets 12 race days. Any free tier below handles that load hundreds of times over, so the real differences are <strong>how easy it is for the RC to enter results on a cold beach</strong>, <strong>how easy it is to add or remove RC members</strong>, and <strong>how much there is to build and maintain</strong>.</p>
+
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Proposal A</span>
+      <h3>GitHub only</h3>
+      <p>Results live as data files in the repo. The RC enters them through a GitHub form. An Action recomputes the standings and publishes a static leaderboard to GitHub Pages.</p>
+      <p><strong>Simplest to run</strong>, but the RC needs GitHub accounts.</p>
+    </div>
+    <div class="card">
+      <span class="tag rec">Proposal B · Recommended</span>
+      <h3>Cloudflare</h3>
+      <p>A small web app on Cloudflare Workers with a SQLite database (D1). Cloudflare Access guards the RC pages with an emailed one-time code.</p>
+      <p><strong>Best RC experience</strong>, and still free.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Proposal C</span>
+      <h3>AWS serverless</h3>
+      <p>S3 + CloudFront site, Lambda API, DynamoDB, and Cognito logins with a "RaceCommittee" group, all deployed with AWS CDK.</p>
+      <p><strong>Most industry-standard</strong>, but the most setup.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="cmp">
+      <thead><tr><th></th><th>A · GitHub only</th><th>B · Cloudflare</th><th>C · AWS</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly cost</td><td class="best">$0</td><td class="best">$0</td><td>$0 to under $1 (see notes)</td></tr>
+        <tr><td>RC login</td><td>GitHub account</td><td class="best">Email one-time code, no password</td><td>Email + password (Cognito)</td></tr>
+        <tr><td>Adding an RC member</td><td>Invite as repo collaborator</td><td class="best">Add an email to one list</td><td>Create user, add to group</td></tr>
+        <tr><td>Entering results on a phone</td><td>GitHub form (usable, plain)</td><td class="best">Purpose-built screen</td><td class="best">Purpose-built screen</td></tr>
+        <tr><td>Time until leaderboard updates</td><td>~1–3 minutes</td><td class="best">Instant</td><td class="best">Instant</td></tr>
+        <tr><td>Fixing a mistake</td><td>Edit a file / new form</td><td class="best">Edit in the app</td><td class="best">Edit in the app</td></tr>
+        <tr><td>Accounts to set up</td><td class="best">GitHub</td><td>GitHub + Cloudflare</td><td>GitHub + AWS</td></tr>
+        <tr><td>Build effort</td><td class="best">Small</td><td>Medium</td><td>Large</td></tr>
+        <tr><td>Ongoing maintenance</td><td class="best">Very low</td><td>Low</td><td>Moderate (IAM, CDK upgrades)</td></tr>
+        <tr><td>Change history / audit</td><td class="best">Every change is a git commit</td><td>Audit table in DB</td><td>Audit table in DB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout rec">
+    <p><strong>Recommendation: Proposal B (Cloudflare).</strong> It gives RC members a real results-entry screen on their phones, a password-free login, and one list of emails to manage. Its free tier is permanent and doesn't go to sleep in the off-season. The build stays small: one TypeScript app and one SQLite database. If the RC is comfortable with GitHub, or we want something running within a weekend, <strong>Proposal A</strong> is a good first step. The scoring code and data format are shared, so moving from A to B later loses nothing.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="common">
+  <h2><span class="num">2</span>What every proposal shares</h2>
+
+  <h3>Scoring rules (from the Notice of Race §9)</h3>
+  <div class="formula">Race score = (boats in the race) + (boats finishing behind you)</div>
+  <ul class="plain">
+    <li>In an 8-boat race, 1st scores 8 + 7 = <strong>15</strong> and last scores 8 + 0 = <strong>8</strong>.</li>
+    <li>A boat that does not race (<strong>DNR</strong>) scores <strong>0</strong>.</li>
+    <li>Each racer drops their lowest <strong>floor(20% × races held)</strong> scores. The season total is the sum of the remaining scores.</li>
+  </ul>
+
+  <p>All three proposals use the <strong>same small scoring module</strong>, written once in TypeScript as a pure function that does no database or network work. That makes it easy to test, and the test suite runs on every change in GitHub Actions. The worked example from the NoR becomes the first test:</p>
+<pre><code><span class="c">// scoring.ts — used by all three proposals</span>
+export function raceScore(boatsInRace: number, place: number): number {
+  return boatsInRace + (boatsInRace - place);       <span class="c">// fleet size + boats beaten</span>
+}
+
+export function seasonTotal(scores: number[], racesHeld: number): number {
+  const drops = Math.floor(racesHeld * 0.2);          <span class="c">// 20%, rounded down</span>
+  return [...scores].sort((a, b) =&gt; a - b)            <span class="c">// DNRs are already 0</span>
+    .slice(drops)
+    .reduce((sum, s) =&gt; sum + s, 0);
+}
+
+<span class="c">// scoring.test.ts — the NoR "Alex" example must equal 107</span>
+test("NoR example", () =&gt; {
+  expect(seasonTotal([13, 10, 17, 8, 14, 15, 0, 17, 9, 12], 10)).toBe(107);
+  expect(raceScore(8, 1)).toBe(15);
+  expect(raceScore(8, 8)).toBe(8);
+});</code></pre>
+
+  <h3>Data model</h3>
+  <p>A <strong>race day</strong> (one Sunday at one venue) holds several <strong>races</strong>. Each race has one <strong>result</strong> per boat that sailed. Racers who didn't sail a race get DNR (0) automatically, so the RC never has to enter them.</p>
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 770 230" role="img" aria-label="Data model: Season contains Race Days, which contain Races, which contain Results; each Result references a Racer.">
+        <g><rect class="box data" x="10" y="20" width="160" height="110" rx="6"/>
+          <text class="t" x="90" y="44">Season</text>
+          <text class="s" x="90" y="68">name: 2026–2027</text>
+          <text class="s" x="90" y="86">start / end dates</text>
+          <text class="s" x="90" y="104">drop rule: 20%</text></g>
+        <g><rect class="box data" x="210" y="20" width="160" height="110" rx="6"/>
+          <text class="t" x="290" y="44">Race Day</text>
+          <text class="s" x="290" y="68">date, start time</text>
+          <text class="s" x="290" y="86">venue A / B / C</text>
+          <text class="s" x="290" y="104">status: sailed, BYE, cxl…</text></g>
+        <g><rect class="box data" x="410" y="20" width="160" height="110" rx="6"/>
+          <text class="t" x="490" y="44">Race</text>
+          <text class="s" x="490" y="68">race # within day</text>
+          <text class="s" x="490" y="86">notes (wind, course)</text>
+          <text class="s" x="490" y="104">entered by / when</text></g>
+        <g><rect class="box data" x="610" y="20" width="150" height="110" rx="6"/>
+          <text class="t" x="685" y="44">Result</text>
+          <text class="s" x="685" y="68">racer</text>
+          <text class="s" x="685" y="86">finish place</text>
+          <text class="s" x="685" y="104">or code: DNF · DSQ</text></g>
+        <g><rect class="box person" x="610" y="165" width="150" height="56" rx="6"/>
+          <text class="t" x="685" y="189">Racer</text>
+          <text class="s" x="685" y="207">name, sail #, active</text></g>
+        <line class="ar" x1="170" y1="75" x2="208" y2="75"/>
+        <line class="ar" x1="370" y1="75" x2="408" y2="75"/>
+        <line class="ar" x1="570" y1="75" x2="608" y2="75"/>
+        <line class="ar" x1="685" y1="130" x2="685" y2="163"/>
+        <text class="lbl" x="189" y="66">1 : n</text>
+        <text class="lbl" x="389" y="66">1 : n</text>
+        <text class="lbl" x="589" y="66">1 : n</text>
+        <text class="lbl l" x="692" y="152">refers to</text>
+        <text class="lbl l" x="10" y="180">Computed from these, never stored: race scores, drops, season totals,</text>
+        <text class="lbl l" x="10" y="198">races sailed (for the $25 fee threshold).</text>
+      </svg>
+    </div>
+    <figcaption>Totals are always recomputed from the raw finishes, so correcting one result automatically fixes the standings.</figcaption>
+  </figure>
+
+  <h3>Features (all proposals)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Area</th><th>Public</th><th>Race Committee only</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Leaderboard</strong></td><td>Season standings, per-race scores, dropped races struck through, race-day detail pages</td><td>—</td></tr>
+        <tr><td><strong>Racers</strong></td><td>Names and sail numbers on the leaderboard</td><td>Add, rename, retire, merge duplicates</td></tr>
+        <tr><td><strong>Race days</strong></td><td>Schedule with status (sailed / BYE / cancelled) and venue</td><td>Create from the NoR schedule, set venue, mark BYE or cancelled, use a backup date</td></tr>
+        <tr><td><strong>Race results</strong></td><td>Finish order per race</td><td>Enter finish order, DNF/DSQ codes, correct or delete a race</td></tr>
+        <tr><td><strong>Treasurer helper</strong></td><td>—</td><td>"Races sailed" column flags racers at 3+ races ($25 fee, NoR §5)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>What the public leaderboard would look like</h4>
+  <div class="table-wrap">
+    <table>
+      <caption style="caption-side:top;text-align:left;padding:0.6rem 0.75rem 0;font-size:0.8rem;color:var(--muted)">Illustrative data · 2 race days · 6 races held · 1 drop per racer</caption>
+      <thead><tr><th>#</th><th>Racer</th><th class="n">R1</th><th class="n">R2</th><th class="n">R3</th><th class="n">R4</th><th class="n">R5</th><th class="n">R6</th><th class="n">Total</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Alex</td><td class="n">9</td><td class="n">8</td><td class="n">7</td><td class="n">8</td><td class="n drop">6</td><td class="n">9</td><td class="n total">41</td></tr>
+        <tr><td>2</td><td>Blair</td><td class="n">8</td><td class="n">9</td><td class="n drop">5</td><td class="n">7</td><td class="n">7</td><td class="n">7</td><td class="n total">38</td></tr>
+        <tr><td>3</td><td>Casey</td><td class="n">7</td><td class="n">6</td><td class="n">6</td><td class="n">9</td><td class="n drop">4</td><td class="n">8</td><td class="n total">36</td></tr>
+        <tr><td>4</td><td>Drew</td><td class="n">6</td><td class="n">7</td><td class="n">4</td><td class="n">5</td><td class="n drop">DNR</td><td class="n">6</td><td class="n total">28</td></tr>
+        <tr><td>5</td><td>Emery</td><td class="n">5</td><td class="n">5</td><td class="n drop">DNR</td><td class="n">6</td><td class="n">5</td><td class="n">5</td><td class="n total">26</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="a">
+  <h2><span class="num">3</span>Proposal A — GitHub only</h2>
+  <p><strong>Idea:</strong> GitHub is the whole system. Racers, race days and results are plain data files (<code>data/*.yaml</code>) in the repo. RC members submit results by filling in a <strong>GitHub Issue Form</strong>, which works in a phone browser or the GitHub app. A GitHub Action checks the submission, saves it to the data files, recomputes the standings, and republishes a static leaderboard site on <strong>GitHub Pages</strong>.</p>
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 770 352" role="img" aria-label="Proposal A architecture. Public visitors read a static leaderboard on GitHub Pages. Race Committee members submit an Issue Form; an Action validates it, commits to data files in the repo, recomputes scores, and redeploys Pages.">
+        <rect class="zone" x="275" y="8" width="488" height="338" rx="10"/>
+        <text class="zlabel" x="290" y="340">GitHub (free)</text>
+
+        <g><rect class="box person" x="20" y="30" width="190" height="54" rx="6"/><text class="t" x="115" y="53">Public visitor</text><text class="s" x="115" y="71">any browser, no login</text></g>
+        <g><rect class="box person" x="20" y="150" width="190" height="54" rx="6"/><text class="t" x="115" y="173">Race Committee</text><text class="s" x="115" y="191">GitHub account</text></g>
+
+        <g><rect class="box" x="560" y="30" width="190" height="54" rx="6"/><text class="t" x="655" y="53">GitHub Pages</text><text class="s" x="655" y="71">static leaderboard HTML</text></g>
+        <g><rect class="box guard" x="290" y="150" width="190" height="54" rx="6"/><text class="t" x="385" y="173">Issue Form</text><text class="s" x="385" y="191">"Enter race results"</text></g>
+        <g><rect class="box ci" x="290" y="270" width="190" height="54" rx="6"/><text class="t" x="385" y="293">Action: ingest</text><text class="s" x="385" y="311">is author RC? validate</text></g>
+        <g><rect class="box data" x="560" y="270" width="190" height="54" rx="6"/><text class="t" x="655" y="293">Repo data files</text><text class="s" x="655" y="311">racers · days · results .yaml</text></g>
+        <g><rect class="box ci" x="560" y="150" width="190" height="54" rx="6"/><text class="t" x="655" y="173">Action: score + build</text><text class="s" x="655" y="191">run tests, render site</text></g>
+
+        <line class="ar" x1="210" y1="57" x2="558" y2="57"/>
+        <text class="lbl" x="385" y="49">reads leaderboard</text>
+        <line class="ar w" x1="210" y1="177" x2="288" y2="177"/>
+        <text class="lbl" x="249" y="169">submits</text>
+        <line class="ar" x1="385" y1="204" x2="385" y2="268"/>
+        <text class="lbl l" x="392" y="240">issue opened</text>
+        <line class="ar" x1="480" y1="297" x2="558" y2="297"/>
+        <text class="lbl" x="519" y="289">commit</text>
+        <line class="ar" x1="655" y1="270" x2="655" y2="206"/>
+        <line class="ar d" x1="655" y1="150" x2="655" y2="86"/>
+        <text class="lbl l" x="662" y="122">deploy</text>
+        <text class="lbl l" x="20" y="250">RC can also edit the .yaml</text>
+        <text class="lbl l" x="20" y="266">directly on github.com to fix</text>
+        <text class="lbl l" x="20" y="282">a mistake (same pipeline).</text>
+      </svg>
+    </div>
+    <div class="legend"><span>data / request</span><span class="lg-w">RC-only action</span><span class="lg-d">automated deploy</span></div>
+    <figcaption>Everything runs inside GitHub. "Is this person RC?" is answered by GitHub's own permission system.</figcaption>
+  </figure>
+
+  <h3>How it works</h3>
+  <h4>RC enters a race</h4>
+  <ol class="steps">
+    <li>On a phone, open the repo → <em>Issues → New → "Race results"</em>. The form asks for race day (dropdown), race number, and finish order (one racer per line, with codes like <code>DSQ</code> allowed).</li>
+    <li>Submitting opens an issue labelled <code>race-result</code>. That starts the <em>ingest</em> workflow.</li>
+    <li>The workflow <strong>refuses</strong> anyone who isn't a collaborator on the repo. It then checks the names against <code>racers.yaml</code>, writes the race into <code>results.yaml</code>, runs the scoring tests, rebuilds the site and deploys it. It finishes by commenting a link on the issue and closing it.</li>
+    <li>If anything is wrong, such as an unknown racer or a duplicate place, the bot comments with the problem and leaves the issue open.</li>
+  </ol>
+  <h4>Racers and race days</h4>
+  <p>Two more issue forms, "Add racer" and "Update race day" (venue, BYE or cancelled), use the same pipeline. The RC can also edit the YAML files in GitHub's web editor. Each change is a commit, so we get a full history of who changed what, and any change can be undone.</p>
+  <h4>User administration</h4>
+  <p>Repo <em>Settings → Collaborators → Add people</em>, using the person's GitHub username. That person is now RC. Removing them revokes access. Nothing else is needed.</p>
+
+  <h3>Repository layout</h3>
+<pre><code>tech/scoreboard/
+  data/racers.yaml  data/race-days.yaml  data/results.yaml
+  src/scoring.ts  src/scoring.test.ts      <span class="c">// shared scoring module</span>
+  src/ingest.ts                            <span class="c">// parses an issue form into results.yaml</span>
+  src/build.ts                             <span class="c">// renders leaderboard HTML</span>
+.github/ISSUE_TEMPLATE/race-results.yml    <span class="c">// the RC form</span>
+.github/workflows/ingest.yml  ci.yml</code></pre>
+
+  <h3>CI workflow</h3>
+<pre><code><span class="c"># .github/workflows/ingest.yml — runs when an RC member submits the form</span>
+name: Ingest race results
+on:
+  issues:
+    types: [opened]
+jobs:
+  ingest:
+    <span class="c"># only repo owner/collaborators; anyone else's issue is ignored</span>
+    if: contains(github.event.issue.labels.*.name, 'race-result') &amp;&amp;
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    permissions: { contents: write, issues: write, pages: write, id-token: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - run: npm run ingest -- --issue ${{ github.event.issue.number }}
+      - run: npm test                        <span class="c"># scoring tests must pass before publishing</span>
+      - run: git commit -am "Results from #${{ github.event.issue.number }}" &amp;&amp; git push
+      - run: npm run build                   <span class="c"># writes site to ./dist</span>
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+      - uses: actions/deploy-pages@v4</code></pre>
+  <div class="callout warn"><p><strong>Gotcha:</strong> a commit pushed by a workflow (using the built-in token) does <em>not</em> trigger other workflows. That's why this one workflow ingests, builds <em>and</em> deploys. A second <code>ci.yml</code> handles normal code changes: it runs tests on pull requests and deploys on pushes to <code>main</code>.</p></div>
+
+  <h3>Free-tier fit</h3>
+  <ul class="plain">
+    <li><strong>GitHub Pages</strong> is free for <strong>public</strong> repos. A private repo needs a paid GitHub plan to use Pages. The FF16 data is public anyway, so a public repo is the natural fit.</li>
+    <li><strong>GitHub Actions</strong> is unlimited for public repos (2,000 min/month for private). Each run takes about 1 minute, and we'd use roughly 50–100 minutes a season.</li>
+  </ul>
+
+  <div class="pc">
+    <div class="pros"><h4>Pros</h4><ul>
+      <li>$0, with no servers, databases or other accounts</li>
+      <li>Every change is a commit: full history and easy undo</li>
+      <li>Least code to write and maintain; nothing to patch</li>
+      <li>Leaderboard is static HTML: fast, and can't go down</li>
+    </ul></div>
+    <div class="cons"><h4>Cons</h4><ul>
+      <li>Every RC member needs a GitHub account and must learn issues</li>
+      <li>1–3 minute delay before the leaderboard updates</li>
+      <li>Form UX is generic (text areas, not drag-to-reorder)</li>
+      <li>Corrections mean editing YAML or a follow-up form</li>
+    </ul></div>
+  </div>
+  <p><strong>Effort:</strong> small. Roughly a weekend for the scoring, forms and site, plus a few evenings of polish.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="b">
+  <h2><span class="num">4</span>Proposal B — Cloudflare <small style="font-family:'Public Sans',sans-serif;font-size:0.8rem;color:var(--good);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;vertical-align:middle">Recommended</small></h2>
+  <p><strong>Idea:</strong> a small real web app. A single <strong>Cloudflare Worker</strong> serves the public leaderboard pages and a JSON API. Data lives in <strong>Cloudflare D1</strong>, a hosted SQLite database. The RC area (<code>/admin</code>) and every write API sit behind <strong>Cloudflare Access</strong>. When an RC member opens <code>/admin</code>, Cloudflare asks for their email and sends a 6-digit one-time code. There are no passwords and no login code to write. The list of allowed emails <em>is</em> the Race Committee.</p>
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 770 345" role="img" aria-label="Proposal B architecture. Public visitors reach a Cloudflare Worker serving the leaderboard and API, backed by a D1 SQLite database. Race Committee members pass Cloudflare Access with an email one-time code before reaching admin pages. GitHub Actions tests and deploys the Worker and database migrations.">
+        <rect class="zone" x="275" y="8" width="488" height="224" rx="10"/>
+        <text class="zlabel" x="290" y="225">Cloudflare (free plan)</text>
+
+        <g><rect class="box person" x="20" y="30" width="190" height="54" rx="6"/><text class="t" x="115" y="53">Public visitor</text><text class="s" x="115" y="71">any browser, no login</text></g>
+        <g><rect class="box person" x="20" y="150" width="190" height="54" rx="6"/><text class="t" x="115" y="173">Race Committee</text><text class="s" x="115" y="191">phone at the ramp</text></g>
+        <g><rect class="box person" x="20" y="270" width="190" height="54" rx="6"/><text class="t" x="115" y="293">Developer</text><text class="s" x="115" y="311">pushes code changes</text></g>
+
+        <g><rect class="box" x="290" y="30" width="190" height="54" rx="6"/><text class="t" x="385" y="53">Worker</text><text class="s" x="385" y="71">pages + API + scoring</text></g>
+        <g><rect class="box guard" x="290" y="150" width="190" height="54" rx="6"/><text class="t" x="385" y="173">Cloudflare Access</text><text class="s" x="385" y="191">email code · RC list</text></g>
+        <g><rect class="box data" x="560" y="30" width="190" height="54" rx="6"/><text class="t" x="655" y="53">D1 database</text><text class="s" x="655" y="71">SQLite: racers, races…</text></g>
+        <g><rect class="box ci" x="290" y="270" width="190" height="54" rx="6"/><text class="t" x="385" y="293">GitHub repo</text><text class="s" x="385" y="311">main branch</text></g>
+        <g><rect class="box ci" x="560" y="270" width="190" height="54" rx="6"/><text class="t" x="655" y="293">GitHub Actions</text><text class="s" x="655" y="311">test → migrate → deploy</text></g>
+
+        <line class="ar" x1="210" y1="57" x2="288" y2="57"/>
+        <text class="lbl" x="249" y="49">GET /</text>
+        <line class="ar w" x1="210" y1="177" x2="288" y2="177"/>
+        <text class="lbl" x="249" y="169">/admin</text>
+        <line class="ar w" x1="385" y1="150" x2="385" y2="86"/>
+        <text class="lbl l" x="392" y="122">signed identity header</text>
+        <line class="ar" x1="480" y1="57" x2="558" y2="57"/>
+        <text class="lbl" x="519" y="49">SQL</text>
+        <line class="ar" x1="210" y1="297" x2="288" y2="297"/>
+        <text class="lbl" x="249" y="289">git push</text>
+        <line class="ar" x1="480" y1="297" x2="558" y2="297"/>
+        <text class="lbl" x="519" y="289">triggers</text>
+        <line class="ar d" x1="655" y1="270" x2="655" y2="86"/>
+        <text class="lbl l" x="662" y="150">wrangler deploy</text>
+        <text class="lbl l" x="662" y="165">+ D1 migrations</text>
+      </svg>
+    </div>
+    <div class="legend"><span>data / request</span><span class="lg-w">RC-only path</span><span class="lg-d">automated deploy</span></div>
+    <figcaption>Cloudflare Access sits in front of the RC pages, so unauthenticated requests never reach our code. The Worker also verifies the identity header Access adds, as a second check.</figcaption>
+  </figure>
+
+  <h3>How it works</h3>
+  <h4>Public views the leaderboard</h4>
+  <p>The browser loads <code>/</code>. The Worker reads the season's results from D1, runs the shared scoring module, and returns the page in milliseconds from a data centre near Boston. No login is needed.</p>
+  <h4>RC enters a race</h4>
+  <ol class="steps">
+    <li>Open <code>scores.ff16…/admin</code> on a phone. The first time, Access asks for an email and sends a code, and the session then lasts for days (configurable).</li>
+    <li>Pick today's race day → <em>New race</em>. Tap racers in finishing order, mark any DNF/DSQ, then <em>Save</em>.</li>
+    <li>The leaderboard updates immediately. <em>Edit</em> or <em>Delete</em> on any race fixes mistakes, and every change is written to an audit table (who and when).</li>
+  </ol>
+  <h4>Racers and race days</h4>
+  <p>The <em>Racers</em> screen handles add, rename and mark inactive. The <em>Schedule</em> screen comes pre-filled from the NoR dates, and the RC sets venue A/B/C, marks BYE or cancelled, or uses a backup date.</p>
+  <h4>User administration</h4>
+  <ol class="steps">
+    <li>Cloudflare dashboard → <em>Zero Trust → Access → Access groups → "Race Committee"</em>.</li>
+    <li>Add or remove an email address and save. That's all.</li>
+  </ol>
+  <p>Optionally, we can show the list read-only inside <code>/admin</code> so the RC can see who has access.</p>
+
+  <h3>Repository layout</h3>
+<pre><code>tech/scoreboard/
+  src/worker.ts              <span class="c">// routes: public pages, /api, /admin</span>
+  src/scoring.ts  src/scoring.test.ts
+  src/admin/                 <span class="c">// small RC screens (plain HTML + a little JS, or Preact)</span>
+  migrations/0001_init.sql   <span class="c">// D1 schema, versioned</span>
+  wrangler.toml              <span class="c">// Worker + D1 binding config</span>
+.github/workflows/ci.yml</code></pre>
+
+  <h3>CI workflow</h3>
+<pre><code><span class="c"># .github/workflows/ci.yml</span>
+name: CI / Deploy
+on:
+  pull_request:                 <span class="c"># test every proposed change</span>
+  push:
+    branches: [main]            <span class="c"># deploy whatever lands on main</span>
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - run: npm test           <span class="c"># includes the NoR "Alex = 107" example</span>
+  deploy:
+    needs: test                 <span class="c"># never deploy if tests fail</span>
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken:  ${{ secrets.CLOUDFLARE_API_TOKEN }}   <span class="c"># stored in repo Settings → Secrets</span>
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply ff16 --remote
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken:  ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy</code></pre>
+  <p>A scheduled workflow can also export the D1 database to a JSON file in the repo each week. That gives a free off-site backup with history.</p>
+
+  <h3>Free-tier fit</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Service</th><th>Free allowance</th><th>FF16 usage (busy race day)</th></tr></thead>
+      <tbody>
+        <tr><td>Workers</td><td>100,000 requests / day</td><td>A few hundred</td></tr>
+        <tr><td>D1</td><td>5 GB storage, 5M row reads / day, 100k writes / day</td><td>&lt; 1 MB total, a few thousand reads</td></tr>
+        <tr><td>Access (Zero Trust)</td><td>Up to 50 users</td><td>3–5 RC members</td></tr>
+        <tr><td>Domain</td><td>Free <code>*.workers.dev</code> address, or a subdomain of an existing FF16 domain</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The free plan has no expiry and nothing pauses during the off-season.</p>
+
+  <div class="pc">
+    <div class="pros"><h4>Pros</h4><ul>
+      <li>Password-free RC login. User admin is one email list.</li>
+      <li>Instant updates, and a results screen built for phones</li>
+      <li>Permanent free tier with lots of headroom</li>
+      <li>Small stack: one TypeScript app + SQLite</li>
+      <li>CI is a simple two-job workflow</li>
+    </ul></div>
+    <div class="cons"><h4>Cons</h4><ul>
+      <li>One more account (Cloudflare) to own and pass on to a future Fleet Captain</li>
+      <li>More code than A: admin screens and an API</li>
+      <li>Change history lives in an audit table, not git (mitigated by weekly export)</li>
+      <li>Cloudflare-specific APIs (Workers/D1), though easy to port</li>
+    </ul></div>
+  </div>
+  <p><strong>Effort:</strong> medium. Roughly 2–3 weekends: schema and scoring, public pages, admin screens, Access setup and CI.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="c">
+  <h2><span class="num">5</span>Proposal C — AWS serverless</h2>
+  <p><strong>Idea:</strong> the textbook AWS serverless stack. The site (public leaderboard + RC screens) is static files in <strong>S3</strong> served through <strong>CloudFront</strong>. The browser calls an API on <strong>AWS Lambda</strong>, which stores data in <strong>DynamoDB</strong>. RC members log in through <strong>Amazon Cognito</strong>, and only users in the Cognito group <code>RaceCommittee</code> can call write endpoints. All infrastructure is defined in code with <strong>AWS CDK</strong> (TypeScript). GitHub Actions deploys it through a short-lived role (OIDC), so no AWS keys are stored in GitHub.</p>
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 770 345" role="img" aria-label="Proposal C architecture. Public visitors load a static site from CloudFront and S3, which calls a Lambda API backed by DynamoDB. Race Committee members sign in with Cognito and send a token to the Lambda API, which checks the RaceCommittee group. GitHub Actions deploys the CDK stack via OIDC.">
+        <rect class="zone" x="275" y="8" width="488" height="224" rx="10"/>
+        <text class="zlabel" x="290" y="225">AWS account</text>
+
+        <g><rect class="box person" x="20" y="30" width="190" height="54" rx="6"/><text class="t" x="115" y="53">Public visitor</text><text class="s" x="115" y="71">any browser, no login</text></g>
+        <g><rect class="box person" x="20" y="150" width="190" height="54" rx="6"/><text class="t" x="115" y="173">Race Committee</text><text class="s" x="115" y="191">email + password</text></g>
+        <g><rect class="box person" x="20" y="270" width="190" height="54" rx="6"/><text class="t" x="115" y="293">Developer</text><text class="s" x="115" y="311">pushes code changes</text></g>
+
+        <g><rect class="box" x="290" y="30" width="190" height="54" rx="6"/><text class="t" x="385" y="53">CloudFront + S3</text><text class="s" x="385" y="71">static site (HTML/JS)</text></g>
+        <g><rect class="box guard" x="290" y="150" width="190" height="54" rx="6"/><text class="t" x="385" y="173">Cognito</text><text class="s" x="385" y="191">group: RaceCommittee</text></g>
+        <g><rect class="box" x="560" y="30" width="190" height="54" rx="6"/><text class="t" x="655" y="53">Lambda API</text><text class="s" x="655" y="71">function URL + scoring</text></g>
+        <g><rect class="box data" x="560" y="150" width="190" height="54" rx="6"/><text class="t" x="655" y="173">DynamoDB</text><text class="s" x="655" y="191">single table</text></g>
+        <g><rect class="box ci" x="290" y="270" width="190" height="54" rx="6"/><text class="t" x="385" y="293">GitHub repo</text><text class="s" x="385" y="311">main branch</text></g>
+        <g><rect class="box ci" x="560" y="270" width="190" height="54" rx="6"/><text class="t" x="655" y="293">GitHub Actions</text><text class="s" x="655" y="311">test → cdk deploy</text></g>
+
+        <line class="ar" x1="210" y1="57" x2="288" y2="57"/>
+        <text class="lbl" x="249" y="49">loads site</text>
+        <line class="ar w" x1="210" y1="177" x2="288" y2="177"/>
+        <text class="lbl" x="249" y="169">sign in</text>
+        <line class="ar" x1="480" y1="57" x2="558" y2="57"/>
+        <text class="lbl" x="519" y="49">fetch /api</text>
+        <line class="ar w" x1="480" y1="165" x2="572" y2="86"/>
+        <text class="lbl" x="500" y="122">JWT token</text>
+        <line class="ar" x1="655" y1="84" x2="655" y2="148"/>
+        <line class="ar" x1="210" y1="297" x2="288" y2="297"/>
+        <text class="lbl" x="249" y="289">git push</text>
+        <line class="ar" x1="480" y1="297" x2="558" y2="297"/>
+        <text class="lbl" x="519" y="289">triggers</text>
+        <line class="ar d" x1="700" y1="270" x2="700" y2="206"/>
+        <text class="lbl l" x="707" y="250">OIDC</text>
+        <text class="lbl l" x="707" y="263">deploy</text>
+      </svg>
+    </div>
+    <div class="legend"><span>data / request</span><span class="lg-w">RC-only path</span><span class="lg-d">automated deploy (whole stack)</span></div>
+    <figcaption>The Lambda checks that the Cognito token belongs to the RaceCommittee group before any write. Using a Lambda Function URL instead of API Gateway avoids API Gateway's per-request charges once its 12-month free period ends.</figcaption>
+  </figure>
+
+  <h3>How it works</h3>
+  <h4>Public views the leaderboard</h4>
+  <p>CloudFront serves the static page. The page calls <code>GET /api/leaderboard</code>, and the Lambda reads the season from DynamoDB, scores it and returns JSON.</p>
+  <h4>RC enters a race</h4>
+  <p>The RC member signs in (Cognito's hosted login page), which hands the browser a token. The same results screen as in Proposal B sends the race to <code>POST /api/races</code>. The Lambda checks the token's <code>cognito:groups</code> contains <code>RaceCommittee</code>, then saves.</p>
+  <h4>User administration</h4>
+  <ol class="steps">
+    <li>AWS console → <em>Cognito → User pools → ff16 → Users → Create user</em>, with their email. Cognito emails a temporary password.</li>
+    <li>Open the user → <em>Add to group → RaceCommittee</em>.</li>
+    <li>Self sign-up is disabled, so only people you create can log in.</li>
+  </ol>
+  <p>To avoid using the AWS console at all, we could build a small "Manage RC" page that calls Cognito's admin APIs. That's more code and needs its own permission checks.</p>
+
+  <h3>Repository layout</h3>
+<pre><code>tech/scoreboard/
+  infra/stack.ts             <span class="c">// CDK: bucket, CloudFront, Lambda, DynamoDB, Cognito</span>
+  api/handler.ts             <span class="c">// Lambda routes</span>
+  src/scoring.ts  src/scoring.test.ts
+  web/                       <span class="c">// static site: leaderboard + RC screens</span>
+.github/workflows/ci.yml</code></pre>
+
+  <h3>CI workflow</h3>
+<pre><code><span class="c"># .github/workflows/ci.yml (deploy job)</span>
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write           <span class="c"># lets GitHub prove its identity to AWS — no stored keys</span>
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::&lt;account-id&gt;:role/ff16-github-deploy
+          aws-region: us-east-1
+      - run: npx cdk deploy --require-approval never</code></pre>
+  <p>One-time setup: bootstrap CDK in the account, and create the IAM role that trusts GitHub's OIDC provider for this repo only.</p>
+
+  <h3>Free-tier fit</h3>
+  <ul class="plain">
+    <li><strong>Lambda</strong> (1M requests/month), <strong>DynamoDB</strong> (25 GB) and <strong>Cognito</strong> (Lite tier, 10,000 monthly users) have permanent free allowances far above FF16 usage. <strong>CloudFront</strong> also has a large always-free allowance.</li>
+    <li><strong>S3</strong> storage is free only during the introductory period. After that, a few MB of site files costs a few cents a month.</li>
+    <li>AWS changed its free-tier model for new accounts in 2025 (credit-based introductory plan). Check the current terms when creating the account, and set a <strong>$1 budget alarm</strong> on day one.</li>
+  </ul>
+
+  <div class="pc">
+    <div class="pros"><h4>Pros</h4><ul>
+      <li>Industry-standard stack; good learning value</li>
+      <li>Fine-grained control over everything; scales without limit</li>
+      <li>Infrastructure as code: the whole system is rebuildable from the repo</li>
+      <li>Keyless deploys via OIDC</li>
+    </ul></div>
+    <div class="cons"><h4>Cons</h4><ul>
+      <li>Most moving parts: IAM, CDK, Cognito, CloudFront</li>
+      <li>User admin happens in the AWS console (or needs extra code)</li>
+      <li>Passwords to reset; Cognito's hosted login is functional but plain</li>
+      <li>Not guaranteed $0: small charges are possible, and a billing account is required</li>
+      <li>Harder to hand over to a non-technical future Fleet Captain</li>
+    </ul></div>
+  </div>
+  <p><strong>Effort:</strong> large. Roughly 4–5 weekends, mostly AWS setup, CDK and auth wiring rather than the scoring itself.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="others">
+  <h2><span class="num">6</span>Other options considered</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Option</th><th>Why not chosen</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Supabase</strong> (Postgres + auth, frontend on GitHub Pages)</td><td>Excellent developer experience and magic-link logins, but free projects <strong>pause after a week of inactivity</strong>. That would happen every off-season, and we'd need a keep-alive job.</td></tr>
+        <tr><td><strong>Firebase</strong> (Firestore + Auth)</td><td>Works well on the free Spark plan. Security rules are another language to learn, and its email-link auth needs more setup than Cloudflare Access for the same result.</td></tr>
+        <tr><td><strong>Google Sheet + published view</strong></td><td>Zero build, but it isn't in GitHub, has no CI, and the drop-scoring formulas are fragile. Basically today's spreadsheet, online.</td></tr>
+        <tr><td><strong>WordPress plugin</strong> (on the existing FF16 site)</td><td>Keeps everything in one place, but means PHP, plugin hosting limits, and no clean GitHub/CI story.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="ci">
+  <h2><span class="num">7</span>GitHub Actions primer</h2>
+  <p><strong>GitHub Actions</strong> is GitHub's built-in automation. You put a YAML file in <code>.github/workflows/</code>. It says <em>when</em> to run (the trigger) and <em>what</em> to run (jobs made of steps). GitHub then runs it on a fresh virtual machine. For a public repo this is free.</p>
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 770 200" role="img" aria-label="CI flow: create a branch, open a pull request, Actions runs tests, review and merge to main, Actions deploys, site is live.">
+        <g><rect class="box person" x="10" y="30" width="110" height="60" rx="6"/><text class="t" x="65" y="56">Branch</text><text class="s" x="65" y="74">make a change</text></g>
+        <g><rect class="box" x="140" y="30" width="110" height="60" rx="6"/><text class="t" x="195" y="56">Pull request</text><text class="s" x="195" y="74">propose it</text></g>
+        <g><rect class="box ci" x="270" y="30" width="110" height="60" rx="6"/><text class="t" x="325" y="56">CI: test</text><text class="s" x="325" y="74">✓ or ✗ on the PR</text></g>
+        <g><rect class="box guard" x="400" y="30" width="110" height="60" rx="6"/><text class="t" x="455" y="56">Merge</text><text class="s" x="455" y="74">only if ✓</text></g>
+        <g><rect class="box ci" x="530" y="30" width="110" height="60" rx="6"/><text class="t" x="585" y="56">CI: deploy</text><text class="s" x="585" y="74">push to main</text></g>
+        <g><rect class="box data" x="660" y="30" width="100" height="60" rx="6"/><text class="t" x="710" y="56">Live</text><text class="s" x="710" y="74">site updated</text></g>
+        <line class="ar" x1="120" y1="60" x2="138" y2="60"/>
+        <line class="ar" x1="250" y1="60" x2="268" y2="60"/>
+        <line class="ar" x1="380" y1="60" x2="398" y2="60"/>
+        <line class="ar" x1="510" y1="60" x2="528" y2="60"/>
+        <line class="ar d" x1="640" y1="60" x2="658" y2="60"/>
+        <path class="ar" d="M325,90 C325,150 65,150 65,92"/>
+        <text class="lbl" x="195" y="160">✗ tests fail → fix on the branch and push again (nothing is deployed)</text>
+        <text class="lbl l" x="10" y="190">Branch protection on main: "require the test check to pass before merging" makes the ✓ mandatory.</text>
+      </svg>
+    </div>
+    <figcaption>The same pattern applies to all three proposals. Only the final deploy step differs (Pages, Wrangler, or CDK).</figcaption>
+  </figure>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Term</th><th>Meaning here</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Workflow</strong></td><td>One YAML file, e.g. <code>ci.yml</code>. You can have several.</td></tr>
+        <tr><td><strong>Trigger</strong> (<code>on:</code>)</td><td><code>pull_request</code> = test proposed changes. <code>push</code> to <code>main</code> = deploy. <code>issues</code> = Proposal A's form. <code>schedule</code> = weekly backup. <code>workflow_dispatch</code> = a manual "Run" button.</td></tr>
+        <tr><td><strong>Job / step</strong></td><td>A job runs on one machine, and its steps run in order. <code>needs: test</code> makes deploy wait for tests.</td></tr>
+        <tr><td><strong>Action</strong> (<code>uses:</code>)</td><td>A reusable step someone published, e.g. <code>actions/checkout</code> or <code>cloudflare/wrangler-action</code>.</td></tr>
+        <tr><td><strong>Secret</strong></td><td>An encrypted value in <em>Settings → Secrets and variables → Actions</em> (e.g. the Cloudflare API token). It's never shown in logs.</td></tr>
+        <tr><td><strong>Branch protection</strong></td><td>A rule on <code>main</code> requiring the test check to pass before merging, so a broken scoring change can't reach the live leaderboard.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>You watch runs under the repo's <strong>Actions</strong> tab. Each run shows a live log, a green tick or a red cross, and GitHub emails you when one fails.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="next">
+  <h2><span class="num">8</span>Decisions &amp; next steps</h2>
+  <div class="callout rec">
+    <p><strong>Decided (Nov 2, 2026):</strong> Proposal B (Cloudflare), public repo, launch on the free <code>workers.dev</code> address with an FF16 subdomain possible later. Initial Race Committee: Josh Abell.
+    Scoring: DNF/DSQ/OCS/RET score 0 and don't count toward the race size; race size = finishers in that race; drops are based on races held; no tie-break; starting fresh with the 2026–27 season.
+    The build lives in this folder. See <code>README.md</code>.</p>
+  </div>
+  <h3>Scoring questions for the committee</h3>
+  <p>The NoR defines finishes and DNR. Before building, we should agree on these, ideally in a short NoR amendment:</p>
+  <ol class="steps">
+    <li><strong>DNF / DSQ / OCS:</strong> does a boat that starts but doesn't finish (or is disqualified) score 0 like DNR? Does it still count toward "total number of racers" for everyone else?</li>
+    <li><strong>"Total number of racers":</strong> boats on the start line for <em>that race</em> (assumed here), or everyone who came out that day?</li>
+    <li><strong>Drops when races are abandoned:</strong> drops are based on races actually <em>held</em> (assumed here), not the 12 scheduled.</li>
+    <li><strong>Ties</strong> in the season total: most firsts, then most seconds, or the last race?</li>
+    <li><strong>Last season's results:</strong> import them for history? (They used a different scoring scheme.)</li>
+  </ol>
+
+  <h3>Decisions for you</h3>
+  <ul class="plain">
+    <li>Pick a proposal (recommended: <strong>B</strong>, or <strong>A</strong> as a quick start).</li>
+    <li>Repo visibility: public (simplest, free Pages/Actions) or private.</li>
+    <li>Web address: free <code>*.workers.dev</code> / <code>*.github.io</code>, or a subdomain of the FF16 WordPress domain. The leaderboard can also be embedded in WordPress.</li>
+    <li>Who the initial RC members are (emails, or GitHub usernames for A).</li>
+  </ul>
+
+  <h3>Suggested build order</h3>
+  <ol class="steps">
+    <li>Scoring module + tests (shared by all options) and GitHub Actions running them on every PR.</li>
+    <li>Data model + seed the 2026–27 schedule from the NoR.</li>
+    <li>Public leaderboard.</li>
+    <li>RC tools: results entry first, then racers and race days.</li>
+    <li>Auth / user admin, deploy pipeline, branch protection.</li>
+    <li>Dry run with the RC on a real race day, then go live.</li>
+  </ol>
+</section>
+
+<footer>Cape Cod Frosty Fleet #16 · Beverly, Massachusetts · Scoring proposals, November 2026</footer>
+</div>
+</body>
+</html>
